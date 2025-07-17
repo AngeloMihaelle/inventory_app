@@ -34,9 +34,7 @@ class MainScreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                          builder: (context) => ConfigScreen(),
-                        ),
+                        MaterialPageRoute(builder: (context) => ConfigScreen()),
                       );
                     },
                   ),
@@ -78,7 +76,7 @@ class MainScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 16),
                         Text(
-                          provider.searchQuery.isEmpty 
+                          provider.searchQuery.isEmpty
                               ? 'No hay elementos en el inventario'
                               : 'No se encontraron elementos',
                           style: TextStyle(
@@ -107,9 +105,7 @@ class MainScreen extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (context) => AddEditScreen(),
-            ),
+            MaterialPageRoute(builder: (context) => AddEditScreen()),
           );
         },
         child: Icon(Icons.add),
@@ -138,10 +134,7 @@ class ItemCard extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
-        title: Text(
-          item.name,
-          style: TextStyle(fontWeight: FontWeight.w500),
-        ),
+        title: Text(item.name, style: TextStyle(fontWeight: FontWeight.w500)),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -149,10 +142,7 @@ class ItemCard extends StatelessWidget {
             if (item.characteristics.isNotEmpty)
               Text(
                 item.getCharacteristicsSummary(),
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey[600],
-                ),
+                style: TextStyle(fontSize: 12, color: Colors.grey[600]),
               ),
           ],
         ),
@@ -178,9 +168,7 @@ class ItemCard extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (context) => AddEditScreen(item: item),
-            ),
+            MaterialPageRoute(builder: (context) => AddEditScreen(item: item)),
           );
         },
       ),

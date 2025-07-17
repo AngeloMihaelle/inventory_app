@@ -30,15 +30,15 @@ class _ConfigScreenState extends State<ConfigScreen> {
             // Data Management Section
             _buildSectionTitle('Gestión de Datos'),
             _buildDataManagementSection(),
-            
+
             SizedBox(height: 32),
-            
+
             // App Settings Section
             _buildSectionTitle('Configuración de la App'),
             _buildAppSettingsSection(),
-            
+
             SizedBox(height: 32),
-            
+
             // About Section
             _buildSectionTitle('Acerca de'),
             _buildAboutSection(),
@@ -70,7 +70,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
             leading: Icon(Icons.file_download, color: Colors.green),
             title: Text('Exportar datos a CSV'),
             subtitle: Text('Guardar todos los elementos en un archivo CSV'),
-            trailing: _isLoading 
+            trailing: _isLoading
                 ? SizedBox(
                     width: 20,
                     height: 20,
@@ -84,7 +84,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
             leading: Icon(Icons.file_upload, color: Colors.orange),
             title: Text('Importar datos desde CSV'),
             subtitle: Text('Cargar elementos desde un archivo CSV'),
-            trailing: _isLoading 
+            trailing: _isLoading
                 ? SizedBox(
                     width: 20,
                     height: 20,
@@ -115,7 +115,9 @@ class _ConfigScreenState extends State<ConfigScreen> {
               return ListTile(
                 leading: Icon(Icons.inventory, color: Colors.pink),
                 title: Text('Total de elementos'),
-                subtitle: Text('${provider.items.length} elementos en inventario'),
+                subtitle: Text(
+                  '${provider.items.length} elementos en inventario',
+                ),
                 trailing: IconButton(
                   icon: Icon(Icons.refresh),
                   onPressed: () {
@@ -132,7 +134,9 @@ class _ConfigScreenState extends State<ConfigScreen> {
           ListTile(
             leading: Icon(Icons.format_list_numbered, color: Colors.purple),
             title: Text('Formato de exportación'),
-            subtitle: Text('CSV con columnas: ID, Nombre, Cantidad, Características'),
+            subtitle: Text(
+              'CSV con columnas: ID, Nombre, Cantidad, Características',
+            ),
             trailing: Icon(Icons.info_outline),
             onTap: _showExportFormatInfo,
           ),
@@ -171,7 +175,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
     try {
       final provider = context.read<InventoryProvider>();
       final success = await _csvService.exportToCSV(provider.getAllItems());
-      
+
       if (success) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -189,10 +193,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Error: $e'),
-          backgroundColor: Colors.red,
-        ),
+        SnackBar(content: Text('Error: $e'), backgroundColor: Colors.red),
       );
     } finally {
       setState(() {
@@ -209,12 +210,14 @@ class _ConfigScreenState extends State<ConfigScreen> {
     try {
       final provider = context.read<InventoryProvider>();
       final result = await _csvService.importFromCSV();
-      
+
       if (result.success) {
         await provider.importItems(result.items);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('${result.items.length} elementos importados exitosamente'),
+            content: Text(
+              '${result.items.length} elementos importados exitosamente',
+            ),
             backgroundColor: Colors.green,
           ),
         );
@@ -228,10 +231,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Error: $e'),
-          backgroundColor: Colors.red,
-        ),
+        SnackBar(content: Text('Error: $e'), backgroundColor: Colors.red),
       );
     } finally {
       setState(() {
@@ -345,7 +345,9 @@ class _ConfigScreenState extends State<ConfigScreen> {
               Text('• Agregar elementos: Botón "+" en la pantalla principal'),
               Text('• Editar elementos: Toca cualquier elemento de la lista'),
               Text('• Eliminar elementos: Menú de 3 puntos en cada elemento'),
-              Text('• Buscar elementos: Barra de búsqueda en la parte superior'),
+              Text(
+                '• Buscar elementos: Barra de búsqueda en la parte superior',
+              ),
               SizedBox(height: 16),
               Text(
                 'Características:',

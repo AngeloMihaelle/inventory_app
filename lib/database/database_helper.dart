@@ -1,4 +1,3 @@
-// database/database_helper.dart
 import 'dart:async';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -20,11 +19,7 @@ class DatabaseHelper {
 
   Future<Database> _initDatabase() async {
     String path = join(await getDatabasesPath(), 'inventory.db');
-    return await openDatabase(
-      path,
-      version: 1,
-      onCreate: _onCreate,
-    );
+    return await openDatabase(path, version: 1, onCreate: _onCreate);
   }
 
   Future<void> _onCreate(Database db, int version) async {
@@ -61,11 +56,7 @@ class DatabaseHelper {
 
   Future<int> deleteItem(String id) async {
     final db = await database;
-    return await db.delete(
-      'items',
-      where: 'id = ?',
-      whereArgs: [id],
-    );
+    return await db.delete('items', where: 'id = ?', whereArgs: [id]);
   }
 
   Future<List<Item>> searchItems(String query) async {

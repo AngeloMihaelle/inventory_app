@@ -6,7 +6,7 @@ import '../database/database_helper.dart';
 class InventoryProvider extends ChangeNotifier {
   final DatabaseHelper _dbHelper = DatabaseHelper();
   final Uuid _uuid = Uuid();
-  
+
   List<Item> _items = [];
   List<Item> _filteredItems = [];
   String _searchQuery = '';
@@ -28,14 +28,18 @@ class InventoryProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addItem(String name, int quantity, Map<String, String> characteristics) async {
+  Future<void> addItem(
+    String name,
+    int quantity,
+    Map<String, String> characteristics,
+  ) async {
     final item = Item(
       id: _uuid.v4(),
       name: name,
       quantity: quantity,
       characteristics: characteristics,
     );
-    
+
     await _dbHelper.insertItem(item);
     await loadItems();
   }
@@ -79,22 +83,20 @@ class InventoryProvider extends ChangeNotifier {
     }
 
     final queryTokens = _searchQuery.toLowerCase().split(' ');
-    
+
     _filteredItems = _items.where((item) {
       final itemName = item.name.toLowerCase();
       final itemId = item.id.toLowerCase();
-      
+
       // Create searchable text from characteristics
       final characteristicsText = item.characteristics.entries
           .map((e) => '${e.key.toLowerCase()} ${e.value.toLowerCase()}')
           .join(' ');
-      
+
       final searchableText = '$itemName $itemId $characteristicsText';
-      
+
       // Check if any token matches
-      return queryTokens.any((token) => 
-        searchableText.contains(token)
-      );
+      return queryTokens.any((token) => searchableText.contains(token));
     }).toList();
   }
 }

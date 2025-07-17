@@ -1,6 +1,3 @@
-
-
-// screens/add_edit_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +17,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _quantityController = TextEditingController();
-  
+
   List<CharacteristicPair> _characteristics = [];
   bool _isLoading = false;
 
@@ -34,7 +31,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
           .map((e) => CharacteristicPair(key: e.key, value: e.value))
           .toList();
     }
-    
+
     if (_characteristics.isEmpty) {
       _characteristics.add(CharacteristicPair());
     }
@@ -51,7 +48,9 @@ class _AddEditScreenState extends State<AddEditScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.item == null ? 'Agregar Elemento' : 'Editar Elemento'),
+        title: Text(
+          widget.item == null ? 'Agregar Elemento' : 'Editar Elemento',
+        ),
         backgroundColor: Colors.pink,
         foregroundColor: Colors.white,
         actions: [
@@ -70,10 +69,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
               ),
             )
           else
-            IconButton(
-              icon: Icon(Icons.save),
-              onPressed: _saveItem,
-            ),
+            IconButton(icon: Icon(Icons.save), onPressed: _saveItem),
         ],
       ),
       body: Form(
@@ -98,7 +94,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
                 },
               ),
               SizedBox(height: 16),
-              
+
               // Quantity field
               TextFormField(
                 controller: _quantityController,
@@ -120,17 +116,14 @@ class _AddEditScreenState extends State<AddEditScreen> {
                 },
               ),
               SizedBox(height: 24),
-              
+
               // Characteristics section
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     'Características',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                   ),
                   IconButton(
                     icon: Icon(Icons.add),
@@ -139,12 +132,12 @@ class _AddEditScreenState extends State<AddEditScreen> {
                 ],
               ),
               SizedBox(height: 8),
-              
+
               // Characteristics list
               ..._characteristics.asMap().entries.map((entry) {
                 final index = entry.key;
                 final characteristic = entry.value;
-                
+
                 return Card(
                   margin: EdgeInsets.only(bottom: 8),
                   child: Padding(
@@ -196,9 +189,9 @@ class _AddEditScreenState extends State<AddEditScreen> {
                   ),
                 );
               }).toList(),
-              
+
               SizedBox(height: 32),
-              
+
               // Save button
               SizedBox(
                 width: double.infinity,
@@ -209,10 +202,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
                     foregroundColor: Colors.white,
                     padding: EdgeInsets.symmetric(vertical: 16),
                   ),
-                  child: Text(
-                    'Guardar',
-                    style: TextStyle(fontSize: 16),
-                  ),
+                  child: Text('Guardar', style: TextStyle(fontSize: 16)),
                 ),
               ),
             ],
@@ -244,7 +234,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
     try {
       final name = _nameController.text.trim();
       final quantity = int.parse(_quantityController.text);
-      
+
       // Filter out empty characteristics
       final characteristics = <String, String>{};
       for (final char in _characteristics) {
@@ -254,7 +244,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
       }
 
       final provider = context.read<InventoryProvider>();
-      
+
       if (widget.item == null) {
         await provider.addItem(name, quantity, characteristics);
       } else {
